@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculadora Rest Client</title>
+</head>
+
+<body>
+    <h1>Calculadora Rest Client</h1>
+
+    <label for="operador1">Operador 1:</label>
+    <input type="number" id="operador1" name="operador1"><br>
+
+    <label for="operador2">Operador 2:</label>
+    <input type="number" id="operador2" name="operador2"><br>
+
+    <label for="operacao">Operação:</label>
+    <select id="operacao" name="operacao">
+        <option value="soma">Soma</option>
+        <option value="subtracao">Subtração</option>
+        <option value="multiplicacao">Multiplicação</option>
+        <option value="divisao">Divisão</option>
+    </select><br>
+
+    <button onclick="calcular()">Calcular</button>
+
+    <label for="resultado">Resultado da Operação:</label>
+    <input type="number" id="resultado" name="resultado" readonly>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        function calcular() {
+            var operador1 = document.getElementById("operador1").value;
+            var operador2 = document.getElementById("operador2").value;
+            var operacao = document.getElementById("operacao").value;
+            var url = "https://18.119.126.228:3000/calculadora/operacoes/" + operacao + "/" + operador1 + "/" + operador2;
+
+            fetch(url, {
+                method: 'POST'
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    document.getElementById("resultado").value = data.value;
+                })
+                .catch(function (error) {
+                    alert("Ocorreu um erro ao realizar a chamada: " + error);
+                });
+            }     
+    </script>
+</body>
+
+</html>
